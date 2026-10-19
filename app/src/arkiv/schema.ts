@@ -71,10 +71,10 @@ export function tallyAttributes(t: TallyInput, reportedAt: number) {
     pc: u64(t.votes.pc),
     pd: u64(t.votes.pd),
     rejected: u64(t.rejected),
-    turnoutBp: i32(turnoutBp(t)),
+    turnout_bp: i32(turnoutBp(t)),
     // More votes cast than voters accredited is the classic forged-sheet signal; kept queryable.
     overvote: i32(totalCast(t) > t.accredited ? 1 : 0),
-    reportedAt: u64(reportedAt),
+    reported_at: u64(reportedAt),
     sheet: bytes32(t.sheetHash),
   }
 }
@@ -107,7 +107,7 @@ export const q = {
   talliesInState: (state: string) => and([...base("tally"), eq("state", state)]),
   talliesAtPu: (pu: string) => and([...base("tally"), eq("pu", pu)]),
   allTallies: () => and(base("tally")),
-  highTurnout: (bp: number) => and([...base("tally"), gt("turnoutBp", bp)]),
+  highTurnout: (bp: number) => and([...base("tally"), gt("turnout_bp", bp)]),
   overvotes: () => and([...base("tally"), eq("overvote", 1)]),
 }
 
@@ -169,9 +169,9 @@ export function decodeTally(e: any): Tally {
     accredited: num(a, "accredited"),
     votes: { pa: num(a, "pa"), pb: num(a, "pb"), pc: num(a, "pc"), pd: num(a, "pd") },
     rejected: num(a, "rejected"),
-    turnoutBp: num(a, "turnoutBp"),
+    turnoutBp: num(a, "turnout_bp"),
     overvote: num(a, "overvote") === 1,
-    reportedAt: num(a, "reportedAt"),
+    reportedAt: num(a, "reported_at"),
     sheet: s(a, "sheet") as Hex,
   }
 }

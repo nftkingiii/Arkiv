@@ -36,7 +36,9 @@ async function accredit() {
 }
 
 async function tallies() {
+  const only = process.argv[3]
   for (const role of ["observerA", "observerB", "observerC", "observerD"] as const) {
+    if (only && role !== only) continue
     const w = walletFor(role)
     const reports: TallyInput[] = DEMO_UNITS.map((u) => reportFor(role, u)).filter(
       (t): t is TallyInput => t !== null,
